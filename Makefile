@@ -10,4 +10,4 @@ test:
 	coverage run --source=src --module unittest
 	coverage report
 
-ci: lint test
+ci: install lint test
