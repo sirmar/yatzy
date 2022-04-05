@@ -1,25 +1,30 @@
-from string import ascii_lowercase
-from typing import Dict, List
-
-from .die import Die
+from typing import List
+from .utils import roll_die
 
 
 class Hand:
-    dice: Dict[str, Die]
+    dice: List[int]
 
-    def __init__(self, dice: List[Die]) -> None:
-        self.dice = {}
-        for i, die in enumerate(dice):
-            self.dice[ascii_lowercase[i]] = die
+    def __init__(self, nb_of_dice: int, rand_fn=roll_die) -> None:
+        self.rand_fn = rand_fn
+        self.nb_of_dice = nb_of_dice
+        self.roll_all()
 
-    def throw_all(self) -> None:
-        for die in self.dice.values():
-            die.throw()
+    def set_dice(self, dice: str) -> None:
+        self.dice = sorted([int(c) for c in dice])
 
-    def throw(self, name_string: str) -> None:
-        for character in name_string:
-            if character in self.dice:
-                self.dice[character].throw()
+    def roll_all(self) -> None:
+        self.dice = sorted([self.rand_fn() for i in range(self.nb_of_dice)])
+
+    def roll(self, dice_to_reroll: str) -> None:
+        new_dice = []
+        for die in self.dice:
+            if str(die) in dice_to_reroll:
+                new_dice.append(self.rand_fn())
+                dice_to_reroll = dice_to_reroll.replace(str(die), "", 1)
+            else:
+                new_dice.append(die)
+        self.dice = sorted(new_dice)
 
     def __str__(self) -> str:
-        return ", ".join([f"{name}:{die}" for name, die in self.dice.items()])
+        return "".join([str(die) for die in self.dice])
