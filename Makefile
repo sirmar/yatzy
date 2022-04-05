@@ -11,3 +11,6 @@ test:
 	coverage report
 
 ci: install lint test
+
+run:
+	python main.py
