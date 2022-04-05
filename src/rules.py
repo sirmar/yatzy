@@ -22,6 +22,14 @@ def sum_equals(hand: Hand, length: int) -> int:
     return max(dict(pairs).keys(), default=0) * length
 
 
+def straight_between(hand: Hand, start: int, end: int) -> int:
+    straight = range(start, end+1)
+    for i in straight:
+        if i not in hand.dice:
+            return 0
+    return sum(straight)
+
+
 class Ones:
     name: str = "Ettor"
 
@@ -94,14 +102,20 @@ class FourEqual:
         return sum_equals(hand, 4)
 
 
-class Yatzy:
-    name: str = "Yatzy"
+class SmallStraight:
+    name: str = "Liten straight"
 
     @staticmethod
     def points(hand: Hand) -> int:
-        if sum_equals(hand, hand.nb_of_dice) > 0:
-            return 50
-        return 0
+        return straight_between(hand, 1, 5)
+
+
+class LargeStraight:
+    name: str = "Stor straight"
+
+    @staticmethod
+    def points(hand: Hand) -> int:
+        return straight_between(hand, 2, 6)
 
 
 class Chance:
@@ -110,3 +124,13 @@ class Chance:
     @staticmethod
     def points(hand: Hand) -> int:
         return sum(hand.dice)
+
+
+class Yatzy:
+    name: str = "Yatzy"
+
+    @staticmethod
+    def points(hand: Hand) -> int:
+        if sum_equals(hand, hand.nb_of_dice) > 0:
+            return 50
+        return 0

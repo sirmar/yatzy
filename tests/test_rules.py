@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
+from src.hand import Hand
 from src.rules import (
     Ones,
     Twos,
@@ -11,9 +12,11 @@ from src.rules import (
     Pair,
     ThreeEqual,
     FourEqual,
+    SmallStraight,
+    LargeStraight,
+    Chance,
     Yatzy,
 )
-from src.hand import Hand
 
 
 class TestRules(TestCase):
@@ -66,6 +69,25 @@ class TestRules(TestCase):
         self.give_points(FourEqual, "55555", 20)
         self.give_zero_points(FourEqual, "11444")
         self.has_name(FourEqual, "Fyrtal")
+
+    def test_small_straigt(self):
+        self.give_points(SmallStraight, "12345", 15)
+        self.give_points(SmallStraight, "1123445", 15)
+        self.give_zero_points(SmallStraight, "23456")
+        self.give_zero_points(SmallStraight, "11111")
+        self.has_name(SmallStraight, "Liten straight")
+
+    def test_large_straigt(self):
+        self.give_points(LargeStraight, "23456", 20)
+        self.give_points(LargeStraight, "2334456", 20)
+        self.give_zero_points(LargeStraight, "12345")
+        self.give_zero_points(LargeStraight, "66666")
+        self.has_name(LargeStraight, "Stor straight")
+
+    def test_chance(self):
+        self.give_points(Chance, "11111", 5)
+        self.give_points(Chance, "34456", 22)
+        self.has_name(Chance, "Chans")
 
     def test_yatzy(self):
         self.give_points(Yatzy, "4444444", 50)
