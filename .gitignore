@@ -1,6 +1,5 @@
 .coverage
 .git
 .mypy_cache
-.pylintrc
 .python-version
 __pycache__
