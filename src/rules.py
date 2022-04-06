@@ -1,5 +1,5 @@
 # pylint: disable=too-few-public-methods
-from typing import Protocol
+from typing import Protocol, List
 from collections import Counter
 
 from .hand import Hand
@@ -16,16 +16,23 @@ def sum_for_die_value(hand: Hand, value: int) -> int:
     return sum(filter(lambda x: x == value, hand.dice))
 
 
-def sum_equals(hand: Hand, length: int) -> int:
-    counter = Counter(hand.dice)
-    pairs = filter(lambda x: x[1] >= length, counter.items())
-    return max(dict(pairs).keys(), default=0) * length
+def sum_sets(hand: Hand, lengths: List[int]) -> int:
+    freq = Counter(hand.dice)
+
+    result = 0
+    for length in sorted(lengths, reverse=True):
+        value = max([v for v, f in freq.items() if f >= length], default=0)
+        if value == 0:
+            return 0
+        result += value * length
+        del freq[value]
+    return result
 
 
 def straight_between(hand: Hand, start: int, end: int) -> int:
-    straight = range(start, end+1)
-    for i in straight:
-        if i not in hand.dice:
+    straight = range(start, end + 1)
+    for value in straight:
+        if value not in hand.dice:
             return 0
     return sum(straight)
 
@@ -83,7 +90,15 @@ class Pair:
 
     @staticmethod
     def points(hand: Hand) -> int:
-        return sum_equals(hand, 2)
+        return sum_sets(hand, [2])
+
+
+class TwoPair:
+    name: str = "Två par"
+
+    @staticmethod
+    def points(hand: Hand) -> int:
+        return sum_sets(hand, [2, 2])
 
 
 class ThreeEqual:
@@ -91,7 +106,7 @@ class ThreeEqual:
 
     @staticmethod
     def points(hand: Hand) -> int:
-        return sum_equals(hand, 3)
+        return sum_sets(hand, [3])
 
 
 class FourEqual:
@@ -99,7 +114,7 @@ class FourEqual:
 
     @staticmethod
     def points(hand: Hand) -> int:
-        return sum_equals(hand, 4)
+        return sum_sets(hand, [4])
 
 
 class SmallStraight:
@@ -118,6 +133,14 @@ class LargeStraight:
         return straight_between(hand, 2, 6)
 
 
+class FullHouse:
+    name: str = "Kåk"
+
+    @staticmethod
+    def points(hand: Hand) -> int:
+        return sum_sets(hand, [2, 3])
+
+
 class Chance:
     name: str = "Chans"
 
@@ -131,6 +154,6 @@ class Yatzy:
 
     @staticmethod
     def points(hand: Hand) -> int:
-        if sum_equals(hand, hand.nb_of_dice) > 0:
+        if sum_sets(hand, [hand.nb_of_dice]) > 0:
             return 50
         return 0

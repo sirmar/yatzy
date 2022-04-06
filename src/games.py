@@ -10,8 +10,14 @@ from .rules import (
     Fives,
     Sixes,
     Pair,
+    TwoPair,
     ThreeEqual,
     FourEqual,
+    SmallStraight,
+    LargeStraight,
+    FullHouse,
+    Chance,
+    Yatzy as YatzyRule,
 )
 from .board import Board
 from .input import choose_combination, choose_rerolls
@@ -58,8 +64,14 @@ class Yatzy(Game):
             Fives(),
             Sixes(),
             Pair(),
+            TwoPair(),
             ThreeEqual(),
             FourEqual(),
+            SmallStraight(),
+            LargeStraight(),
+            FullHouse(),
+            Chance(),
+            YatzyRule(),
         ]
         super().__init__(rules, 5)
 

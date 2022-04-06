@@ -10,10 +10,12 @@ from src.rules import (
     Fives,
     Sixes,
     Pair,
+    TwoPair,
     ThreeEqual,
     FourEqual,
     SmallStraight,
     LargeStraight,
+    FullHouse,
     Chance,
     Yatzy,
 )
@@ -56,6 +58,14 @@ class TestRules(TestCase):
         self.give_zero_points(Pair, "12345")
         self.has_name(Pair, "Ett par")
 
+    def test_two_pair(self):
+        self.give_points(TwoPair, "13366", 18)
+        self.give_points(TwoPair, "11666", 14)
+        self.give_points(TwoPair, "114466", 20)
+        self.give_zero_points(TwoPair, "11112")
+        self.give_zero_points(TwoPair, "11234")
+        self.has_name(TwoPair, "Två par")
+
     def test_tree_equal(self):
         self.give_points(ThreeEqual, "111666", 18)
         self.give_points(ThreeEqual, "33444", 12)
@@ -83,6 +93,15 @@ class TestRules(TestCase):
         self.give_zero_points(LargeStraight, "12345")
         self.give_zero_points(LargeStraight, "66666")
         self.has_name(LargeStraight, "Stor straight")
+
+    def test_full_house(self):
+        self.give_points(FullHouse, "33366", 21)
+        self.give_points(FullHouse, "11666", 20)
+        self.give_points(FullHouse, "155666", 28)
+        self.give_points(FullHouse, "11116666", 20)
+        self.give_zero_points(FullHouse, "11223")
+        self.give_zero_points(FullHouse, "33333")
+        self.has_name(FullHouse, "Kåk")
 
     def test_chance(self):
         self.give_points(Chance, "11111", 5)
