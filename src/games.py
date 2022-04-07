@@ -26,6 +26,7 @@ from .input import choose_combination, choose_rerolls
 class Game:
     hand: Hand
     rules: List[Rule]
+    board: Board
 
     def __init__(self, rules: List[Rule], nb_of_dice: int) -> None:
         self.hand = Hand(nb_of_dice)
