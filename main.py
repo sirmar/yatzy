@@ -1,8 +1,9 @@
 from src.games import Yatzy
+from src.cli import CLI
 
 
 def main():
-    game = Yatzy()
+    game = Yatzy(CLI())
     game.play()
 
 

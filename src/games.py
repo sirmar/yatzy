@@ -1,6 +1,8 @@
 from typing import List
 
+from .gui import Gui
 from .hand import Hand
+from .board import Board
 from .rules import (
     Rule,
     Ones,
@@ -24,44 +26,38 @@ from .rules import (
     Chance,
     Yatzy as YatzyRule,
 )
-from .board import Board
-from .input import choose_combination, choose_rerolls
 
 
 class Game:
-    hand: Hand
-    rules: List[Rule]
-    board: Board
-
-    def __init__(self, rules: List[Rule], nb_of_dice: int) -> None:
+    def __init__(self, gui: Gui, rules: List[Rule], nb_of_dice: int) -> None:
         self.hand = Hand(nb_of_dice)
         self.rules = rules
         self.board = Board(rules)
+        self.gui = gui
 
     def play(self) -> None:
         print(self.board)
         for _ in range(len(self.rules)):
             self.turn()
             print(self.board)
-        print("Slut!")
 
     def turn(self) -> None:
         self.hand.roll_all()
-        print(f"{self.hand}")
+        self.gui.display_hand(self.hand)
 
         for _ in range(2):
-            dice_to_reroll = choose_rerolls()
+            dice_to_reroll = self.gui.choose_rerolls()
             if len(dice_to_reroll) == 0:
                 break
             self.hand.roll(dice_to_reroll)
-            print(f"{self.hand}")
+            self.gui.display_hand(self.hand)
 
-        rule_index = choose_combination()
+        rule_index = self.gui.choose_combination()
         self.board.set_score(rule_index, self.hand)
 
 
 class Yatzy(Game):
-    def __init__(self) -> None:
+    def __init__(self, gui: Gui) -> None:
         rules: List[Rule] = [
             Ones(),
             Twos(),
@@ -79,11 +75,11 @@ class Yatzy(Game):
             Chance(),
             YatzyRule(50),
         ]
-        super().__init__(rules, 5)
+        super().__init__(gui, rules, 5)
 
 
 class MaxiYatzy(Game):
-    def __init__(self) -> None:
+    def __init__(self, gui: Gui) -> None:
         rules: List[Rule] = [
             Ones(),
             Twos(),
@@ -106,7 +102,7 @@ class MaxiYatzy(Game):
             Chance(),
             YatzyRule(100),
         ]
-        super().__init__(rules, 6)
+        super().__init__(gui, rules, 6)
 
 
 # Uppifrån och ner
