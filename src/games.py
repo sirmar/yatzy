@@ -11,11 +11,16 @@ from .rules import (
     Sixes,
     Pair,
     TwoPair,
+    ThreePair,
     ThreeEqual,
     FourEqual,
+    FiveEqual,
     SmallStraight,
     LargeStraight,
-    FullHouse,
+    FullStraight,
+    Cabin,
+    House,
+    Tower,
     Chance,
     Yatzy as YatzyRule,
 )
@@ -70,13 +75,39 @@ class Yatzy(Game):
             FourEqual(),
             SmallStraight(),
             LargeStraight(),
-            FullHouse(),
+            Cabin(),
             Chance(),
-            YatzyRule(),
+            YatzyRule(50),
         ]
         super().__init__(rules, 5)
 
 
-# Maxi Yatzy
+class MaxiYatzy(Game):
+    def __init__(self) -> None:
+        rules: List[Rule] = [
+            Ones(),
+            Twos(),
+            Threes(),
+            Fours(),
+            Fives(),
+            Sixes(),
+            Pair(),
+            TwoPair(),
+            ThreePair(),
+            ThreeEqual(),
+            FourEqual(),
+            FiveEqual(),
+            SmallStraight(),
+            LargeStraight(),
+            FullStraight(),
+            Cabin(),
+            House(),
+            Tower(),
+            Chance(),
+            YatzyRule(100),
+        ]
+        super().__init__(rules, 6)
+
+
 # Uppifrån och ner
 # 10000
