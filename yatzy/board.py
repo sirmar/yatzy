@@ -1,7 +1,7 @@
 from typing import Tuple, List
 
-from .hand import Hand
-from .rules import Rule
+from yatzy.hand import Hand
+from yatzy.rules import Rule
 
 
 class Board:

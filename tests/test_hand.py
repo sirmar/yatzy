@@ -1,6 +1,6 @@
 import unittest
 
-from src.hand import Hand
+from yatzy.hand import Hand
 
 
 class TestHand(unittest.TestCase):

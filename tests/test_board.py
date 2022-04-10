@@ -1,7 +1,7 @@
 import unittest
 
-from src.board import Board
-from src.rules import Ones, Twos, Pair
+from yatzy.board import Board
+from yatzy.rules import Ones, Twos, Pair
 
 
 class TestBoard(unittest.TestCase):

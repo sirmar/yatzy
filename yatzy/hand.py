@@ -1,5 +1,5 @@
 from typing import List
-from .utils import roll_die
+from yatzy.utils import roll_die
 
 
 class Hand:

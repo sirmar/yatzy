@@ -1,8 +1,8 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
-from src.hand import Hand
-from src.rules import (
+from yatzy.hand import Hand
+from yatzy.rules import (
     Ones,
     Twos,
     Threes,

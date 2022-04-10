@@ -1,4 +1,4 @@
-from .hand import Hand
+from yatzy.hand import Hand
 
 
 # pylint: disable=no-self-use

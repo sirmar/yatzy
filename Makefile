@@ -1,16 +1,13 @@
 install:
-	pip install -r requirements.txt
+	pip install -e '.[test]'
 
 lint:
-	black src tests
-	mypy src
-	pylint src
+	black yatzy tests
+	mypy yatzy
+	pylint yatzy
 
 test:
-	coverage run --source=src --module unittest
+	coverage run --source=yatzy --module unittest
 	coverage report
 
 ci: install lint test
-
-run:
-	python main.py

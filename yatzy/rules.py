@@ -2,7 +2,7 @@
 from typing import Protocol, List
 from collections import Counter
 
-from .hand import Hand
+from yatzy.hand import Hand
 
 
 class Rule(Protocol):

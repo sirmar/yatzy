@@ -1,5 +1,0 @@
-# development dependencies
-coverage
-black
-mypy
-pylint

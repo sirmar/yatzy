@@ -1,9 +1,9 @@
 from typing import List
 
-from .gui import Gui
-from .hand import Hand
-from .board import Board
-from .rules import (
+from yatzy.gui import Gui
+from yatzy.hand import Hand
+from yatzy.board import Board
+from yatzy.rules import (
     Rule,
     Ones,
     Twos,
