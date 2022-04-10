@@ -3,29 +3,7 @@ from typing import List
 from yatzy.gui import Gui
 from yatzy.hand import Hand
 from yatzy.board import Board
-from yatzy.rules import (
-    Rule,
-    Ones,
-    Twos,
-    Threes,
-    Fours,
-    Fives,
-    Sixes,
-    Pair,
-    TwoPair,
-    ThreePair,
-    ThreeEqual,
-    FourEqual,
-    FiveEqual,
-    SmallStraight,
-    LargeStraight,
-    FullStraight,
-    Cabin,
-    House,
-    Tower,
-    Chance,
-    Yatzy as YatzyRule,
-)
+from yatzy.rules import Rule
 
 
 class Game:
@@ -54,55 +32,6 @@ class Game:
 
         rule_index = self.gui.choose_combination()
         self.board.set_score(rule_index, self.hand)
-
-
-class Yatzy(Game):
-    def __init__(self, gui: Gui) -> None:
-        rules: List[Rule] = [
-            Ones(),
-            Twos(),
-            Threes(),
-            Fours(),
-            Fives(),
-            Sixes(),
-            Pair(),
-            TwoPair(),
-            ThreeEqual(),
-            FourEqual(),
-            SmallStraight(),
-            LargeStraight(),
-            Cabin(),
-            Chance(),
-            YatzyRule(50),
-        ]
-        super().__init__(gui, rules, 5)
-
-
-class MaxiYatzy(Game):
-    def __init__(self, gui: Gui) -> None:
-        rules: List[Rule] = [
-            Ones(),
-            Twos(),
-            Threes(),
-            Fours(),
-            Fives(),
-            Sixes(),
-            Pair(),
-            TwoPair(),
-            ThreePair(),
-            ThreeEqual(),
-            FourEqual(),
-            FiveEqual(),
-            SmallStraight(),
-            LargeStraight(),
-            FullStraight(),
-            Cabin(),
-            House(),
-            Tower(),
-            Chance(),
-            YatzyRule(100),
-        ]
-        super().__init__(gui, rules, 6)
 
 
 # Uppifrån och ner
