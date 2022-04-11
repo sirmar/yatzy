@@ -1,13 +1,14 @@
 from yatzy.hand import Hand
+from yatzy.board import Board
 
 
 # pylint: disable=no-self-use
 class CLI:
     def display_hand(self, hand: Hand) -> None:
-        print(f"{hand}")
+        print(hand)
 
-    def display_score_board(self) -> None:
-        ...
+    def display_score_board(self, board: Board) -> None:
+        print(board)
 
     def choose_combination(self) -> int:
         while True:

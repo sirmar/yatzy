@@ -1,5 +1,7 @@
 from yatzy.games import Game
 from yatzy.cli import CLI
+from yatzy.hand import Hand
+from yatzy.board import Board
 from yatzy.rules import (
     Ones,
     Twos,
@@ -42,7 +44,7 @@ def yatzy():
         Chance(),
         Yatzy(50),
     ]
-    game = Game(CLI(), rules, 5)
+    game = Game(CLI(), Hand(5), Board(rules))
     game.play()
 
 
@@ -69,7 +71,7 @@ def maxi_yatzy():
         Chance(),
         Yatzy(100),
     ]
-    game = Game(CLI(), rules, 6)
+    game = Game(CLI(), Hand(6), Board(rules))
     game.play()
 
 

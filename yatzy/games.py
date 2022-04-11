@@ -1,23 +1,18 @@
-from typing import List
-
 from yatzy.gui import Gui
 from yatzy.hand import Hand
 from yatzy.board import Board
-from yatzy.rules import Rule
 
 
 class Game:
-    def __init__(self, gui: Gui, rules: List[Rule], nb_of_dice: int) -> None:
-        self.hand = Hand(nb_of_dice)
-        self.rules = rules
-        self.board = Board(rules)
+    def __init__(self, gui: Gui, hand: Hand, board: Board) -> None:
+        self.hand = hand
+        self.board = board
         self.gui = gui
 
     def play(self) -> None:
-        print(self.board)
-        for _ in range(len(self.rules)):
+        for _ in range(self.board.rounds()):
+            self.gui.display_score_board(self.board)
             self.turn()
-            print(self.board)
 
     def turn(self) -> None:
         self.hand.roll_all()

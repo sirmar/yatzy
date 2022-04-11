@@ -1,12 +1,10 @@
-from typing import Tuple, List
+from typing import List
 
 from yatzy.hand import Hand
 from yatzy.rules import Rule
 
 
 class Board:
-    score: List[Tuple[Rule, int, bool]]
-
     def __init__(self, rules: List[Rule]) -> None:
         self.score = [(rule, 0, False) for rule in rules]
 
@@ -20,10 +18,13 @@ class Board:
             return 50
         return 0
 
+    def rounds(self):
+        return len(self.score)
+
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"{i+1:>2}. {rule.name}: {score}"
-                for i, (rule, score, _) in enumerate(self.score)
+                f"{i+1:>2}. {rule.name}: {score if used else ''}"
+                for i, (rule, score, used) in enumerate(self.score)
             ]
         )
