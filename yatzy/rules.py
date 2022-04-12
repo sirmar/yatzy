@@ -1,5 +1,5 @@
 # pylint: disable=too-few-public-methods
-from typing import Protocol, List
+from typing import Protocol
 from collections import Counter
 
 from yatzy.hand import Hand
@@ -16,7 +16,7 @@ def sum_for_die_value(hand: Hand, value: int) -> int:
     return sum(filter(lambda x: x == value, hand.dice))
 
 
-def sum_sets(hand: Hand, lengths: List[int]) -> int:
+def sum_sets(hand: Hand, lengths: list[int]) -> int:
     freq = Counter(hand.dice)
 
     result = 0

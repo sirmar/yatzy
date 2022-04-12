@@ -1,9 +1,8 @@
-from typing import List
 from yatzy.utils import roll_die
 
 
 class Hand:
-    dice: List[int]
+    dice: list[int]
 
     def __init__(self, nb_of_dice: int, rand_fn=roll_die) -> None:
         self.rand_fn = rand_fn
