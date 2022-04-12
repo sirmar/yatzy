@@ -1,33 +1,101 @@
-from yatzy.gui import Gui
-from yatzy.hand import Hand
-from yatzy.board import Board
+# pylint: disable=too-few-public-methods
+from typing import Protocol
+from dataclasses import dataclass, field
 
 
-class Game:
-    def __init__(self, gui: Gui, hand: Hand, board: Board) -> None:
-        self.hand = hand
-        self.board = board
-        self.gui = gui
+from yatzy.rules import (
+    Rule,
+    Ones,
+    Twos,
+    Threes,
+    Fours,
+    Fives,
+    Sixes,
+    Pair,
+    TwoPair,
+    ThreePair,
+    ThreeEqual,
+    FourEqual,
+    FiveEqual,
+    SmallStraight,
+    LargeStraight,
+    FullStraight,
+    Cabin,
+    House,
+    Tower,
+    Chance,
+    Yatzy as YatzyRule,
+)
 
-    def play(self) -> None:
-        for _ in range(self.board.rounds()):
-            self.gui.display_score_board(self.board)
-            self.turn()
 
-    def turn(self) -> None:
-        self.hand.roll_all()
-        self.gui.display_hand(self.hand)
-
-        for _ in range(2):
-            dice_to_reroll = self.gui.choose_rerolls()
-            if len(dice_to_reroll) == 0:
-                break
-            self.hand.roll(dice_to_reroll)
-            self.gui.display_hand(self.hand)
-
-        rule_index = self.gui.choose_combination()
-        self.board.set_score(rule_index, self.hand)
+class Game(Protocol):
+    bonus_threshold: int
+    bonus_amount: int
+    nb_of_dice: int
+    upper_section: list[Rule]
+    lower_section: list[Rule]
 
 
-# Uppifrån och ner
-# 10000
+@dataclass
+class Yatzy:
+    bonus_threshold: int = 63
+    bonus_amount: int = 50
+    nb_of_dice: int = 5
+    upper_section: list[Rule] = field(
+        default_factory=lambda: [
+            Ones(),
+            Twos(),
+            Threes(),
+            Fours(),
+            Fives(),
+            Sixes(),
+        ]
+    )
+    lower_section: list[Rule] = field(
+        default_factory=lambda: [
+            Pair(),
+            TwoPair(),
+            ThreeEqual(),
+            FourEqual(),
+            SmallStraight(),
+            LargeStraight(),
+            Cabin(),
+            Chance(),
+            YatzyRule(50),
+        ]
+    )
+
+
+@dataclass
+class MaxiYatzy:
+    bonus_threshold: int = 84
+    bonus_amount: int = 100
+    nb_of_dice: int = 6
+    upper_section: list[Rule] = field(
+        default_factory=lambda: [
+            Ones(),
+            Twos(),
+            Threes(),
+            Fours(),
+            Fives(),
+            Sixes(),
+        ]
+    )
+    lower_section: list[Rule] = field(
+        default_factory=lambda: [
+            Pair(),
+            TwoPair(),
+            ThreePair(),
+            ThreeEqual(),
+            FourEqual(),
+            FiveEqual(),
+            SmallStraight(),
+            LargeStraight(),
+            FullStraight(),
+            Cabin(),
+            House(),
+            Tower(),
+            Chance(),
+            YatzyRule(100),
+        ]
+    )

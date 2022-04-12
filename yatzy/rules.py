@@ -7,7 +7,6 @@ from yatzy.hand import Hand
 
 class Rule(Protocol):
     name: str
-    bonus: bool
 
     def points(self, hand: Hand) -> int:
         ...
@@ -40,7 +39,6 @@ def straight_between(hand: Hand, start: int, end: int) -> int:
 
 class Ones:
     name: str = "Ettor"
-    bonus: bool = True
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -49,7 +47,6 @@ class Ones:
 
 class Twos:
     name: str = "Tvåor"
-    bonus: bool = True
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -58,7 +55,6 @@ class Twos:
 
 class Threes:
     name: str = "Treor"
-    bonus: bool = True
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -67,7 +63,6 @@ class Threes:
 
 class Fours:
     name: str = "Fyror"
-    bonus: bool = True
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -76,7 +71,6 @@ class Fours:
 
 class Fives:
     name: str = "Femmor"
-    bonus: bool = True
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -85,7 +79,6 @@ class Fives:
 
 class Sixes:
     name: str = "Sexor"
-    bonus: bool = True
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -94,7 +87,6 @@ class Sixes:
 
 class Pair:
     name: str = "Ett par"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -103,7 +95,6 @@ class Pair:
 
 class TwoPair:
     name: str = "Två par"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -112,7 +103,6 @@ class TwoPair:
 
 class ThreePair:
     name: str = "Tre par"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -121,7 +111,6 @@ class ThreePair:
 
 class ThreeEqual:
     name: str = "Tretal"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -130,7 +119,6 @@ class ThreeEqual:
 
 class FourEqual:
     name: str = "Fyrtal"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -139,7 +127,6 @@ class FourEqual:
 
 class FiveEqual:
     name: str = "Femtal"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -148,7 +135,6 @@ class FiveEqual:
 
 class SmallStraight:
     name: str = "Liten straight"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -157,7 +143,6 @@ class SmallStraight:
 
 class LargeStraight:
     name: str = "Stor straight"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -166,7 +151,6 @@ class LargeStraight:
 
 class FullStraight:
     name: str = "Full straight"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -175,7 +159,6 @@ class FullStraight:
 
 class Cabin:
     name: str = "Kåk"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -184,7 +167,6 @@ class Cabin:
 
 class House:
     name: str = "Hus"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -193,7 +175,6 @@ class House:
 
 class Tower:
     name: str = "Torn"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -202,7 +183,6 @@ class Tower:
 
 class Chance:
     name: str = "Chans"
-    bonus: bool = False
 
     @staticmethod
     def points(hand: Hand) -> int:
@@ -211,7 +191,6 @@ class Chance:
 
 class Yatzy:
     name: str = "Yatzy"
-    bonus: bool = False
 
     def __init__(self, points: int) -> None:
         self._points = points

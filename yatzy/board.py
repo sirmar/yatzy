@@ -1,22 +1,21 @@
-from typing import List
+from typing import Optional
 
 from yatzy.hand import Hand
+from yatzy.games import Game
 from yatzy.rules import Rule
 
 
 class Board:
-    def __init__(self, rules: List[Rule]) -> None:
-        self.score = [(rule, 0, False) for rule in rules]
+    score: list[tuple[Rule, Optional[int]]]
+
+    def __init__(self, game: Game) -> None:
+        self.game = game
+        all_rules = game.upper_section + game.lower_section
+        self.score = [(rule, None) for rule in all_rules]
 
     def set_score(self, rule_index: int, hand: Hand):
         rule = self.score[rule_index][0]
-        self.score[rule_index] = (rule, rule.points(hand), True)
-
-    def bonus(self):
-        points = sum([points for rule, points, _ in self.score if rule.bonus])
-        if points > 63:
-            return 50
-        return 0
+        self.score[rule_index] = (rule, rule.points(hand))
 
     def rounds(self):
         return len(self.score)
@@ -24,7 +23,7 @@ class Board:
     def __str__(self) -> str:
         return "\n".join(
             [
-                f"{i+1:>2}. {rule.name}: {score if used else ''}"
-                for i, (rule, score, used) in enumerate(self.score)
+                f"{i+1:>2}. {rule.name} {score if score is not None else ''}"
+                for i, (rule, score) in enumerate(self.score)
             ]
         )
