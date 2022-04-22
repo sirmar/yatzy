@@ -27,7 +27,3 @@ class Engine:
 
         rule_index = self.gui.choose_combination()
         self.board.set_score(rule_index, self.hand)
-
-
-# Uppifrån och ner
-# 10000
