@@ -2,7 +2,7 @@ install:
 	pip install -e '.[test]'
 
 lint:
-	black yatzy tests
+	black -l 78 yatzy tests
 	mypy yatzy
 	pylint yatzy
 
