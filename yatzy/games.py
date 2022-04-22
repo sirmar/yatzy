@@ -32,8 +32,7 @@ class Game(Protocol):
     bonus_threshold: int
     bonus_amount: int
     nb_of_dice: int
-    upper_section: list[Rule]
-    lower_section: list[Rule]
+    rules: list[Rule]
 
 
 @dataclass
@@ -41,7 +40,7 @@ class Yatzy:
     bonus_threshold: int = 63
     bonus_amount: int = 50
     nb_of_dice: int = 5
-    upper_section: list[Rule] = field(
+    rules: list[Rule] = field(
         default_factory=lambda: [
             Ones(),
             Twos(),
@@ -49,10 +48,6 @@ class Yatzy:
             Fours(),
             Fives(),
             Sixes(),
-        ]
-    )
-    lower_section: list[Rule] = field(
-        default_factory=lambda: [
             Pair(),
             TwoPair(),
             ThreeEqual(),
@@ -71,7 +66,7 @@ class MaxiYatzy:
     bonus_threshold: int = 84
     bonus_amount: int = 100
     nb_of_dice: int = 6
-    upper_section: list[Rule] = field(
+    rules: list[Rule] = field(
         default_factory=lambda: [
             Ones(),
             Twos(),
@@ -79,10 +74,6 @@ class MaxiYatzy:
             Fours(),
             Fives(),
             Sixes(),
-        ]
-    )
-    lower_section: list[Rule] = field(
-        default_factory=lambda: [
             Pair(),
             TwoPair(),
             ThreePair(),

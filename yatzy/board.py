@@ -1,29 +1,46 @@
-from typing import Optional
-
+from dataclasses import dataclass
 from yatzy.hand import Hand
 from yatzy.games import Game
 from yatzy.rules import Rule
 
 
+@dataclass
+class Row:
+    rule: Rule
+    score: int
+    used: bool
+
+    # pylint: disable=assignment-from-no-return
+    def set_score(self, hand: Hand) -> None:
+        self.score = self.rule.points(hand)
+        self.used = True
+
+
 class Board:
-    score: list[tuple[Rule, Optional[int]]]
+    score: dict[int, Row]
 
     def __init__(self, game: Game) -> None:
         self.game = game
-        all_rules = game.upper_section + game.lower_section
-        self.score = [(rule, None) for rule in all_rules]
+        self.score = {
+            i: Row(rule, 0, False) for i, rule in enumerate(game.rules)
+        }
 
-    def set_score(self, rule_index: int, hand: Hand):
-        rule = self.score[rule_index][0]
-        self.score[rule_index] = (rule, rule.points(hand))
+    def set_score(self, rule_index: int, hand: Hand) -> None:
+        row = self.score[rule_index]
+        row.set_score(hand)
 
-    def rounds(self):
-        return len(self.score)
+    def bonus(self) -> int:
+        if self.upper_section_score() < self.game.bonus_threshold:
+            return 0
+        return self.game.bonus_amount
 
-    def __str__(self) -> str:
-        return "\n".join(
-            [
-                f"{i+1:>2}. {rule.name} {score if score is not None else ''}"
-                for i, (rule, score) in enumerate(self.score)
-            ]
+    def upper_section_score(self) -> int:
+        return sum(
+            [row.score for row in self.score.values() if row.rule.upper]
         )
+
+    def total_score(self) -> int:
+        return sum([row.score for row in self.score.values()]) + self.bonus()
+
+    def rounds(self) -> int:
+        return len(self.score)

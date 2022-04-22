@@ -36,4 +36,5 @@ class TestHand(unittest.TestCase):
         self.when_rerolling("")
 
     def then_dice(self, expected):
-        self.assertEqual(str(self.hand), expected)
+        dice_str = "".join([str(die) for die in self.hand.dice])
+        self.assertEqual(dice_str, expected)

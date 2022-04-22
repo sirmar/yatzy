@@ -7,6 +7,7 @@ from yatzy.hand import Hand
 
 class Rule(Protocol):
     name: str
+    upper: bool
 
     def points(self, hand: Hand) -> int:
         ...
@@ -37,7 +38,15 @@ def straight_between(hand: Hand, start: int, end: int) -> int:
     return sum(straight)
 
 
-class Ones:
+class UpperRule:
+    upper: bool = True
+
+
+class LowerRule:
+    upper: bool = False
+
+
+class Ones(UpperRule):
     name: str = "Ettor"
 
     @staticmethod
@@ -45,7 +54,7 @@ class Ones:
         return sum_for_die_value(hand, 1)
 
 
-class Twos:
+class Twos(UpperRule):
     name: str = "Tvåor"
 
     @staticmethod
@@ -53,7 +62,7 @@ class Twos:
         return sum_for_die_value(hand, 2)
 
 
-class Threes:
+class Threes(UpperRule):
     name: str = "Treor"
 
     @staticmethod
@@ -61,7 +70,7 @@ class Threes:
         return sum_for_die_value(hand, 3)
 
 
-class Fours:
+class Fours(UpperRule):
     name: str = "Fyror"
 
     @staticmethod
@@ -69,7 +78,7 @@ class Fours:
         return sum_for_die_value(hand, 4)
 
 
-class Fives:
+class Fives(UpperRule):
     name: str = "Femmor"
 
     @staticmethod
@@ -77,7 +86,7 @@ class Fives:
         return sum_for_die_value(hand, 5)
 
 
-class Sixes:
+class Sixes(UpperRule):
     name: str = "Sexor"
 
     @staticmethod
@@ -85,7 +94,7 @@ class Sixes:
         return sum_for_die_value(hand, 6)
 
 
-class Pair:
+class Pair(LowerRule):
     name: str = "Ett par"
 
     @staticmethod
@@ -93,7 +102,7 @@ class Pair:
         return sum_sets(hand, [2])
 
 
-class TwoPair:
+class TwoPair(LowerRule):
     name: str = "Två par"
 
     @staticmethod
@@ -101,7 +110,7 @@ class TwoPair:
         return sum_sets(hand, [2, 2])
 
 
-class ThreePair:
+class ThreePair(LowerRule):
     name: str = "Tre par"
 
     @staticmethod
@@ -109,7 +118,7 @@ class ThreePair:
         return sum_sets(hand, [2, 2, 2])
 
 
-class ThreeEqual:
+class ThreeEqual(LowerRule):
     name: str = "Tretal"
 
     @staticmethod
@@ -117,7 +126,7 @@ class ThreeEqual:
         return sum_sets(hand, [3])
 
 
-class FourEqual:
+class FourEqual(LowerRule):
     name: str = "Fyrtal"
 
     @staticmethod
@@ -125,7 +134,7 @@ class FourEqual:
         return sum_sets(hand, [4])
 
 
-class FiveEqual:
+class FiveEqual(LowerRule):
     name: str = "Femtal"
 
     @staticmethod
@@ -133,7 +142,7 @@ class FiveEqual:
         return sum_sets(hand, [5])
 
 
-class SmallStraight:
+class SmallStraight(LowerRule):
     name: str = "Liten straight"
 
     @staticmethod
@@ -141,7 +150,7 @@ class SmallStraight:
         return straight_between(hand, 1, 5)
 
 
-class LargeStraight:
+class LargeStraight(LowerRule):
     name: str = "Stor straight"
 
     @staticmethod
@@ -149,7 +158,7 @@ class LargeStraight:
         return straight_between(hand, 2, 6)
 
 
-class FullStraight:
+class FullStraight(LowerRule):
     name: str = "Full straight"
 
     @staticmethod
@@ -157,7 +166,7 @@ class FullStraight:
         return straight_between(hand, 1, 6)
 
 
-class Cabin:
+class Cabin(LowerRule):
     name: str = "Kåk"
 
     @staticmethod
@@ -165,7 +174,7 @@ class Cabin:
         return sum_sets(hand, [2, 3])
 
 
-class House:
+class House(LowerRule):
     name: str = "Hus"
 
     @staticmethod
@@ -173,7 +182,7 @@ class House:
         return sum_sets(hand, [3, 3])
 
 
-class Tower:
+class Tower(LowerRule):
     name: str = "Torn"
 
     @staticmethod
@@ -181,7 +190,7 @@ class Tower:
         return sum_sets(hand, [2, 4])
 
 
-class Chance:
+class Chance(LowerRule):
     name: str = "Chans"
 
     @staticmethod
@@ -189,7 +198,7 @@ class Chance:
         return sum(hand.dice)
 
 
-class Yatzy:
+class Yatzy(LowerRule):
     name: str = "Yatzy"
 
     def __init__(self, points: int) -> None:

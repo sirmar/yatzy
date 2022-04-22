@@ -24,6 +24,3 @@ class Hand:
             else:
                 new_dice.append(die)
         self.dice = sorted(new_dice)
-
-    def __str__(self) -> str:
-        return "".join([str(die) for die in self.dice])
