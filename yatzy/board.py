@@ -32,6 +32,14 @@ class Board:
     def used(self, rule_index: int) -> bool:
         return self.score[rule_index].used
 
+    def upper(self):
+        return [(i, row) for i, row in self.score.items() if row.rule.upper]
+
+    def lower(self):
+        return [
+            (i, row) for i, row in self.score.items() if not row.rule.upper
+        ]
+
     def bonus(self) -> int:
         if self.upper_section_score() < self.game.bonus_threshold:
             return 0

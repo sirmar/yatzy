@@ -59,7 +59,6 @@ class TestBoard(unittest.TestCase):
         self.given_rule_with_dice(0, "11222")
         self.assertTrue(self.board.used(0))
 
-
     def given_rule_with_dice(self, rule_index, dice):
         self.hand.set_dice(dice)
         self.board.set_score(rule_index, self.hand)
