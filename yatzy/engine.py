@@ -20,10 +20,10 @@ class Engine:
 
         for _ in range(2):
             dice_to_reroll = self.gui.choose_rerolls()
-            if len(dice_to_reroll) == 0:
+            if dice_to_reroll is None:
                 break
             self.hand.roll(dice_to_reroll)
             self.gui.display_hand(self.hand)
 
-        rule_index = self.gui.choose_combination()
+        rule_index = self.gui.choose_combination(self.board)
         self.board.set_score(rule_index, self.hand)

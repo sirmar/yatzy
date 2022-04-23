@@ -29,6 +29,9 @@ class Board:
         row = self.score[rule_index]
         row.set_score(hand)
 
+    def used(self, rule_index: int) -> bool:
+        return self.score[rule_index].used
+
     def bonus(self) -> int:
         if self.upper_section_score() < self.game.bonus_threshold:
             return 0
