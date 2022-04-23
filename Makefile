@@ -1,5 +1,6 @@
 install:
 	poetry install
+	poetry shell
 
 lint:
 	black yatzy tests
