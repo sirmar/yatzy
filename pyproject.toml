@@ -1,0 +1,37 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "yatzy"
+version = "0.1.0"
+description = "Yatzy game"
+authors = ["Marcus Veibäck"]
+license = "MIT"
+
+[tool.poetry.scripts]
+yatzy = "yatzy.main:yatzy"
+maxi-yatzy = "yatzy.main:maxi_yatzy"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+pylint = "^2.13.7"
+mypy = "^0.942"
+coverage = "^6.3.2"
+
+[tool.black]
+line-length = 78
+
+[tool.coverage.run]
+source=["yatzy"]
+omit=["yatzy/main.py"]
+
+[tool.pylint.'MASSAGE CONTROL']
+disable=[
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring"
+]

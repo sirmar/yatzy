@@ -1,13 +1,13 @@
 install:
-	pip install -e '.[test]'
+	poetry install
 
 lint:
-	black -l 78 yatzy tests
+	black yatzy tests
 	mypy yatzy
 	pylint yatzy
 
 test:
-	coverage run --source=yatzy --module unittest
+	coverage run --module unittest
 	coverage report
 
 ci: install lint test
