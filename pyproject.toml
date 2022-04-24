@@ -11,7 +11,9 @@ license = "MIT"
 
 [tool.poetry.scripts]
 yatzy = "yatzy.main:yatzy"
+yatzy-top-down = "yatzy.main:yatzy_top_down"
 maxi-yatzy = "yatzy.main:maxi_yatzy"
+maxi-yatzy-top-down = "yatzy.main:maxi_yatzy_top_down"
 
 [tool.poetry.dependencies]
 python = "^3.10"

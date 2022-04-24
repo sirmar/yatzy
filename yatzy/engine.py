@@ -1,20 +1,22 @@
+from abc import ABC
+
 from yatzy.gui import Gui
 from yatzy.hand import Hand
 from yatzy.board import Board
 
 
-class Engine:
+class Engine(ABC):
     def __init__(self, gui: Gui, hand: Hand, board: Board) -> None:
         self.hand = hand
         self.board = board
         self.gui = gui
 
     def play(self) -> None:
-        for _ in range(self.board.rounds()):
+        for turn_nb in range(self.board.rounds()):
             self.gui.display_score_board(self.board)
-            self.turn()
+            self.turn(turn_nb + 1)
 
-    def turn(self) -> None:
+    def turn(self, turn_nb: int) -> None:
         self.hand.roll_all()
         self.gui.display_hand(self.hand)
 
@@ -24,7 +26,7 @@ class Engine:
                 break
             self.gui.display_hand(self.hand)
 
-        self.choose_combination()
+        self.update_combination(turn_nb)
 
     def choose_rerolls(self) -> bool:
         rerolls = self.gui.choose_rerolls()
@@ -33,10 +35,20 @@ class Engine:
         self.hand.roll(str(rerolls))
         return True
 
-    def choose_combination(self) -> None:
+    def update_combination(self, turn_nb) -> None:
+        raise NotImplementedError
+
+
+class Choose(Engine):
+    def update_combination(self, _: int) -> None:
         while True:
             combination = self.gui.choose_combination()
             if not self.board.used(combination):
                 self.board.set_score(combination, self.hand)
                 return
             self.gui.display_combination_used_error()
+
+
+class TopDown(Engine):
+    def update_combination(self, turn_nb: int) -> None:
+        self.board.set_score(turn_nb, self.hand)
