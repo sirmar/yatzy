@@ -19,11 +19,24 @@ class Engine:
         self.gui.display_hand(self.hand)
 
         for _ in range(2):
-            dice_to_reroll = self.gui.choose_rerolls()
-            if dice_to_reroll is None:
+            reroll_again = self.choose_rerolls()
+            if not reroll_again:
                 break
-            self.hand.roll(dice_to_reroll)
             self.gui.display_hand(self.hand)
 
-        rule_index = self.gui.choose_combination(self.board)
-        self.board.set_score(rule_index, self.hand)
+        self.choose_combination()
+
+    def choose_rerolls(self) -> bool:
+        rerolls = self.gui.choose_rerolls()
+        if rerolls == 0:
+            return False
+        self.hand.roll(str(rerolls))
+        return True
+
+    def choose_combination(self) -> None:
+        while True:
+            combination = self.gui.choose_combination()
+            if not self.board.used(combination):
+                self.board.set_score(combination, self.hand)
+                return
+            self.gui.display_combination_used_error()

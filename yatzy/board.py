@@ -22,7 +22,7 @@ class Board:
     def __init__(self, game: Game) -> None:
         self.game = game
         self.score = {
-            i: Row(rule, 0, False) for i, rule in enumerate(game.rules)
+            i + 1: Row(rule, 0, False) for i, rule in enumerate(game.rules)
         }
 
     def set_score(self, rule_index: int, hand: Hand) -> None:
