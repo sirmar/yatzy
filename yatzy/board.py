@@ -41,9 +41,7 @@ class Board:
         ]
 
     def bonus(self) -> int:
-        if self.upper_section_score() < self.game.bonus_threshold:
-            return 0
-        return self.game.bonus_amount
+        return self.game.bonus(self.upper_section_score())
 
     def upper_section_score(self) -> int:
         return sum(

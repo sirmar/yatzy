@@ -1,7 +1,6 @@
 # pylint: disable=too-few-public-methods
-from typing import Protocol
 from dataclasses import dataclass, field
-
+from abc import ABC
 
 from yatzy.rules import (
     Rule,
@@ -28,15 +27,20 @@ from yatzy.rules import (
 )
 
 
-class Game(Protocol):
+class Game(ABC):
     bonus_threshold: int
     bonus_amount: int
     nb_of_dice: int
     rules: list[Rule]
 
+    def bonus(self, score: int) -> int:
+        if score < self.bonus_threshold:
+            return 0
+        return self.bonus_amount
+
 
 @dataclass
-class Yatzy:
+class Yatzy(Game):
     bonus_threshold: int = 63
     bonus_amount: int = 50
     nb_of_dice: int = 5
@@ -62,7 +66,7 @@ class Yatzy:
 
 
 @dataclass
-class MaxiYatzy:
+class MaxiYatzy(Game):
     bonus_threshold: int = 84
     bonus_amount: int = 100
     nb_of_dice: int = 6
