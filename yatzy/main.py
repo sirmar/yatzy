@@ -1,4 +1,4 @@
-from yatzy.games import Game, Yatzy, MaxiYatzy
+from yatzy.games import Game, create_yatzy, create_maxi_yatzy
 from yatzy.engine import Choose, TopDown
 from yatzy.cli import CLI
 from yatzy.hand import Hand
@@ -11,16 +11,16 @@ def play(game: Game, mode) -> None:
 
 
 def yatzy():
-    play(Yatzy(), Choose)
+    play(create_yatzy(), Choose)
 
 
 def yatzy_top_down():
-    play(Yatzy(), TopDown)
+    play(create_yatzy(), TopDown)
 
 
 def maxi_yatzy():
-    play(MaxiYatzy(), Choose)
+    play(create_maxi_yatzy(), Choose)
 
 
 def maxi_yatzy_top_down():
-    play(MaxiYatzy(), TopDown)
+    play(create_maxi_yatzy(), TopDown)

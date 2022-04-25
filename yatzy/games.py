@@ -1,6 +1,4 @@
-# pylint: disable=too-few-public-methods
-from dataclasses import dataclass, field
-from abc import ABC
+from dataclasses import dataclass
 
 from yatzy.rules import (
     Rule,
@@ -27,7 +25,8 @@ from yatzy.rules import (
 )
 
 
-class Game(ABC):
+@dataclass
+class Game:
     bonus_threshold: int
     bonus_amount: int
     nb_of_dice: int
@@ -39,13 +38,12 @@ class Game(ABC):
         return self.bonus_amount
 
 
-@dataclass
-class Yatzy(Game):
-    bonus_threshold: int = 63
-    bonus_amount: int = 50
-    nb_of_dice: int = 5
-    rules: list[Rule] = field(
-        default_factory=lambda: [
+def create_yatzy() -> Game:
+    return Game(
+        bonus_threshold=63,
+        bonus_amount=50,
+        nb_of_dice=5,
+        rules=[
             Ones(),
             Twos(),
             Threes(),
@@ -61,17 +59,16 @@ class Yatzy(Game):
             Cabin(),
             Chance(),
             YatzyRule(50),
-        ]
+        ],
     )
 
 
-@dataclass
-class MaxiYatzy(Game):
-    bonus_threshold: int = 84
-    bonus_amount: int = 100
-    nb_of_dice: int = 6
-    rules: list[Rule] = field(
-        default_factory=lambda: [
+def create_maxi_yatzy() -> Game:
+    return Game(
+        bonus_threshold=84,
+        bonus_amount=100,
+        nb_of_dice=6,
+        rules=[
             Ones(),
             Twos(),
             Threes(),
@@ -92,5 +89,5 @@ class MaxiYatzy(Game):
             Tower(),
             Chance(),
             YatzyRule(100),
-        ]
+        ],
     )
