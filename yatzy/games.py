@@ -21,7 +21,7 @@ from yatzy.rules import (
     House,
     Tower,
     Chance,
-    Yatzy as YatzyRule,
+    Yatzy,
 )
 
 
@@ -58,7 +58,7 @@ def create_yatzy() -> Game:
             LargeStraight(),
             Cabin(),
             Chance(),
-            YatzyRule(50),
+            Yatzy(50),
         ],
     )
 
@@ -88,6 +88,6 @@ def create_maxi_yatzy() -> Game:
             House(),
             Tower(),
             Chance(),
-            YatzyRule(100),
+            Yatzy(100),
         ],
     )
