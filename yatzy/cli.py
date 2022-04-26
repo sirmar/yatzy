@@ -5,27 +5,31 @@ from yatzy.utils import clear_screen, input_int
 
 # pylint: disable=no-self-use
 class CLI:
+    def __init__(self, board: Board, hand: Hand) -> None:
+        self.board = board
+        self.hand = hand
+
     def print_section(self, rows) -> None:
         for i, row in rows:
             score = row.score if row.used else ""
             print(f"{i:>2} | {row.rule.name:<20} | {score}")
 
-    def display_hand(self, hand: Hand) -> None:
-        hand_str = "".join([str(die) for die in hand.dice])
+    def display_hand(self) -> None:
+        hand_str = "".join([str(die) for die in self.hand.dice])
         print(f"Nuvarande hand: {hand_str}")
 
-    def display_score_board(self, board: Board) -> None:
+    def display_score_board(self) -> None:
         clear_screen()
         print(35 * "-")
-        self.print_section(board.upper())
+        self.print_section(self.board.upper())
         print(35 * "-")
-        print(f"Summa: {board.upper_section_score()}")
+        print(f"Summa: {self.board.upper_section_score()}")
         print(35 * "-")
-        print(f"Bonus: {board.bonus()}")
+        print(f"Bonus: {self.board.bonus()}")
         print(35 * "-")
-        self.print_section(board.lower())
+        self.print_section(self.board.lower())
         print(35 * "-")
-        print(f"Summa: {board.total_score()}")
+        print(f"Summa: {self.board.total_score()}")
         print(35 * "-")
 
     def display_combination_used_error(self) -> None:

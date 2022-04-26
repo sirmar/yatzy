@@ -91,3 +91,9 @@ def create_maxi_yatzy() -> Game:
             Yatzy(100),
         ],
     )
+
+
+def create_game(game: str) -> Game:
+    if game == "maxiyatzy":
+        return create_maxi_yatzy()
+    return create_yatzy()

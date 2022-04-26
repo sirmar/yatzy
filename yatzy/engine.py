@@ -1,54 +1,41 @@
-from abc import ABC
-
 from yatzy.gui import Gui
 from yatzy.hand import Hand
 from yatzy.board import Board
+from yatzy.combination_strategy import CombinationStrategy
+from yatzy.reroll_strategy import RerollStrategy
 
 
-class Engine(ABC):
-    def __init__(self, gui: Gui, hand: Hand, board: Board) -> None:
+# pylint: disable=too-many-arguments
+class Engine:
+    def __init__(
+        self,
+        gui: Gui,
+        hand: Hand,
+        board: Board,
+        reroll_strategy: RerollStrategy,
+        combination_strategy: CombinationStrategy,
+    ) -> None:
         self.hand = hand
         self.board = board
         self.gui = gui
+        self.reroll_strategy = reroll_strategy
+        self.combination_strategy = combination_strategy
 
     def play(self) -> None:
-        for turn_nb in range(self.board.rounds()):
-            self.gui.display_score_board(self.board)
-            self.turn(turn_nb + 1)
+        for _ in range(self.board.rounds()):
+            self.gui.display_score_board()
+            self.turn()
 
-    def turn(self, turn_nb: int) -> None:
+    def turn(self) -> None:
         self.hand.roll_all()
-        self.gui.display_hand(self.hand)
+        self.gui.display_hand()
 
         for _ in range(2):
-            reroll_again = self.choose_rerolls()
-            if not reroll_again:
+            rerolls = self.reroll_strategy.choose_dice()
+            if rerolls == 0:
                 break
-            self.gui.display_hand(self.hand)
+            self.hand.roll(str(rerolls))
+            self.gui.display_hand()
 
-        self.update_combination(turn_nb)
-
-    def choose_rerolls(self) -> bool:
-        rerolls = self.gui.choose_rerolls()
-        if rerolls == 0:
-            return False
-        self.hand.roll(str(rerolls))
-        return True
-
-    def update_combination(self, turn_nb) -> None:
-        raise NotImplementedError
-
-
-class Choose(Engine):
-    def update_combination(self, _: int) -> None:
-        while True:
-            combination = self.gui.choose_combination()
-            if not self.board.used(combination):
-                self.board.set_score(combination, self.hand)
-                return
-            self.gui.display_combination_used_error()
-
-
-class TopDown(Engine):
-    def update_combination(self, turn_nb: int) -> None:
-        self.board.set_score(turn_nb, self.hand)
+        combination = self.combination_strategy.choose_combination()
+        self.board.set_score(combination, self.hand)
