@@ -35,6 +35,10 @@ class TopDownCombinationStrategy:
 def create_combination_strategy(
     variant: str, board: Board, gui: Gui
 ) -> CombinationStrategy:
-    if variant == "topdown":
-        return TopDownCombinationStrategy()
-    return UserInputCombinationStrategy(board, gui)
+    match variant:
+        case "topdown":
+            return TopDownCombinationStrategy()
+        case "standard":
+            return UserInputCombinationStrategy(board, gui)
+        case _:
+            raise ValueError(f"No such combination strategy: {variant}")

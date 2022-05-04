@@ -1,13 +1,13 @@
 import unittest
 
 from yatzy.board import Board
-from yatzy.games import create_yatzy
+from yatzy.games import Game
 from yatzy.hand import Hand
 
 
 class TestBoard(unittest.TestCase):
     def setUp(self):
-        self.game = create_yatzy()
+        self.game = Game.yatzy()
         self.board = Board(self.game)
         self.hand = Hand(self.game.nb_of_dice)
 

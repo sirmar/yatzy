@@ -28,6 +28,14 @@ line-length = 78
 source=["yatzy"]
 omit=["yatzy/main.py"]
 
+[tool.coverage.report]
+exclude_lines=[
+    'pragma: no cover',
+    'class .*\bProtocol\):',
+    '@(abc\.)?abstractmethod',
+    'if __name__ == .__main__.:'
+]
+
 [tool.pylint.'MASSAGE CONTROL']
 disable=[
     "missing-module-docstring",
