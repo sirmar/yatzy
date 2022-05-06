@@ -35,6 +35,9 @@ class CLI:
     def display_combination_used_error(self) -> None:
         print("Upptagen. Välj en annan.")
 
+    def display_no_such_combination_error(self) -> None:
+        print("Finns ingen sådan kombination. Välj en annan.")
+
     def choose_combination(self) -> int:
         return input_int("Välj kombination: ")
 

@@ -13,25 +13,32 @@ class TestUserInputCombinationStrategy(unittest.TestCase):
     def setUp(self):
         self.gui = unittest.mock.Mock(Gui)
         self.board = unittest.mock.Mock(Board)
+        self.board.rounds.return_value = 10
         self.strategy = UserInputCombinationStrategy(self.board, self.gui)
 
-    def test_user_input_combination_strategy(self):
+    def test_can_choose_available_combination(self):
         self.given_user_input([1])
-        self.given_combination_is_avaialable([False])
+        self.given_combination_is_used([False])
         self.when_choosing_combination()
         self.then_combination_is(1)
 
-    def test_user_cannot_choose_used_combination(self):
+    def test_user_can_only_choose_available_combinations(self):
         self.given_user_input([1, 2])
-        self.given_combination_is_avaialable([True, False])
+        self.given_combination_is_used([True, False])
         self.when_choosing_combination()
         self.then_combination_is(2)
         self.then_combination_used_error_is_shown()
 
+    def test_user_can_only_choose_existing_combinations(self):
+        self.given_user_input([0, 1])
+        self.given_combination_is_used([False])
+        self.when_choosing_combination()
+        self.then_combination_is(1)
+
     def given_user_input(self, combinations):
         self.gui.choose_combination.side_effect = combinations
 
-    def given_combination_is_avaialable(self, is_used_list):
+    def given_combination_is_used(self, is_used_list):
         self.board.used.side_effect = is_used_list
 
     def when_choosing_combination(self):

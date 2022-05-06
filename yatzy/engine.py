@@ -22,8 +22,8 @@ class Engine:
         self.combination_strategy = combination_strategy
 
     def play(self) -> None:
+        self.gui.display_score_board()
         for _ in range(self.board.rounds()):
-            self.gui.display_score_board()
             self.turn()
 
     def turn(self) -> None:
@@ -39,3 +39,4 @@ class Engine:
 
         combination = self.combination_strategy.choose_combination()
         self.board.set_score(combination, self.hand)
+        self.gui.display_score_board()

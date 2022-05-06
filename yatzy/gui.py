@@ -8,6 +8,9 @@ class Gui(Protocol):
     def display_score_board(self) -> None:
         ...
 
+    def display_no_such_combination_error(self) -> None:
+        ...
+
     def display_combination_used_error(self) -> None:
         ...
 

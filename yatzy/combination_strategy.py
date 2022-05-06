@@ -18,9 +18,12 @@ class UserInputCombinationStrategy:
     def choose_combination(self) -> int:
         while True:
             combination = self.gui.choose_combination()
-            if not self.board.used(combination):
+            if combination < 1 or combination > self.board.rounds():
+                self.gui.display_no_such_combination_error()
+            elif self.board.used(combination):
+                self.gui.display_combination_used_error()
+            else:
                 return combination
-            self.gui.display_combination_used_error()
 
 
 class TopDownCombinationStrategy:
